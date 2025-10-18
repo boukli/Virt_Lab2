@@ -1,0 +1,29 @@
+#!/bin/bash
+# USB device passthrough
+
+# Find USB devices
+lsusb
+lsusb -v
+
+# Pass through specific USB device by vendor:product ID
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1024 \
+  -drive file=vm.qcow2,format=qcow2 \
+  -usb \
+  -device usb-host,vendorid=0x1234,productid=0x5678
+
+# Pass through by bus and device number
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1024 \
+  -drive file=vm.qcow2,format=qcow2 \
+  -device usb-host,hostbus=1,hostaddr=3
+
+# Pass through USB controller (entire bus)
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1024 \
+  -drive file=vm.qcow2,format=qcow2 \
+  -device usb-ehci \
+  -device usb-host,bus=ehci.0,vendorid=0x1234,productid=0x5678

@@ -1,0 +1,24 @@
+#!/bin/bash
+# Performance troubleshooting
+
+echo "=== Performance Diagnostics ==="
+
+# Check host resources
+echo "Host CPU: $(nproc) cores"
+echo "Host RAM: $(free -h | grep Mem: | awk '{print $2}')"
+echo "Disk space: $(df -h / | grep / | awk '{print $4}')"
+
+# Monitor QEMU performance
+qemu-system-x86_64 \
+    -accel kvm \
+    -cpu host \
+    -m 4G \
+    -drive file=vm.qcow2,if=virtio \
+    -monitor stdio \
+    -D perf.log
+
+# Performance testing commands
+echo "Use these to monitor performance:"
+echo "top -p \$(pgrep qemu-system)"
+echo "perf stat -e cpu-cycles -p \$(pgrep qemu-system)"
+echo "iostat -x 1"

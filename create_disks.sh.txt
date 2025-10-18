@@ -1,0 +1,12 @@
+#!/bin/bash
+# Create qcow2 disk (dynamic allocation)
+qemu-img create -f qcow2 ubuntu-server.qcow2 20G
+
+# Create raw disk (pre-allocated)
+qemu-img create -f raw windows10.raw 40G
+
+# Create disk with backing file (for snapshots)
+qemu-img create -f qcow2 -b ubuntu-server.qcow2 snapshot1.qcow2
+
+# Convert between formats
+qemu-img convert -f qcow2 -O vmdk ubuntu-server.qcow2 ubuntu-server.vmdk

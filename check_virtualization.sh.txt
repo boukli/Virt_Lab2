@@ -1,0 +1,9 @@
+#!/bin/bash
+# Check CPU virtualization support
+egrep -c '(vmx|svm)' /proc/cpuinfo
+
+# Check KVM module
+lsmod | grep kvm
+
+# Check if /dev/kvm exists
+ls -la /dev/kvm

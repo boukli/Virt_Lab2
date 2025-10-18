@@ -1,0 +1,29 @@
+#!/bin/bash
+# Network troubleshooting
+
+# Check bridge status
+brctl show
+ip link show type bridge
+
+# Check iptables rules
+sudo iptables -t nat -L -n -v
+sudo iptables -L -n -v
+
+# Check routing
+ip route show
+ip neigh show
+
+# Test connectivity from host to VM
+ping -c 3 192.168.122.10
+nc -zv 192.168.122.10 22
+
+# Check DNS resolution
+nslookup vm-hostname
+dig vm-hostname
+
+# Check libvirt network status
+virsh net-info default
+virsh net-dhcp-leases default
+
+# Packet capture on bridge
+sudo tcpdump -i virbr0 -n

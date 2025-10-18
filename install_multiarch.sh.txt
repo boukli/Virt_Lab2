@@ -1,0 +1,11 @@
+#!/bin/bash
+# Install QEMU with multi-architecture support on Ubuntu/Debian
+
+sudo apt update
+sudo apt install qemu-system-x86 qemu-system-arm qemu-system-mips qemu-system-ppc qemu-system-sparc qemu-system-riscv64 qemu-utils qemu-user qemu-user-static
+
+# Additional architecture support
+sudo apt install qemu-efi-aarch64 qemu-efi-arm
+
+# Development tools
+sudo apt install gcc-aarch64-linux-gnu gcc-mips-linux-gnu gcc-riscv64-linux-gnu

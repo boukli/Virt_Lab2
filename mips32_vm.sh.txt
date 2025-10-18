@@ -1,0 +1,15 @@
+#!/bin/bash
+# MIPS 32-bit virtual machine
+
+qemu-system-mips \
+    -machine malta \
+    -cpu 24Kf \
+    -smp 1 \
+    -m 1G \
+    -drive file=mips32-vm.qcow2,format=qcow2 \
+    -netdev user,id=net0 \
+    -device pcnet,netdev=net0 \
+    -kernel vmlinux-4.19.0-4-4kc-malta \
+    -initrd initrd.img-4.19.0-4-4kc-malta \
+    -append "root=/dev/sda1 console=ttyS0" \
+    -nographic

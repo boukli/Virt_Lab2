@@ -1,0 +1,17 @@
+#!/bin/bash
+# VM lifecycle management commands
+
+# Start VM in background
+qemu-system-x86_64 -enable-kvm -m 2048 -drive file=vm.qcow2,format=qcow2 -daemonize
+
+# Stop VM gracefully (requires acpi in VM)
+echo "system_powerdown" | nc localhost 4444
+
+# Force stop VM
+pkill qemu-system-x86_64
+
+# List running QEMU processes
+ps aux | grep qemu-system
+
+# Monitor VM status
+virsh list --all

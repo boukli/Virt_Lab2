@@ -1,0 +1,14 @@
+#!/bin/bash
+# Check QEMU capabilities and version
+
+echo "=== QEMU Version ==="
+qemu-system-x86_64 --version
+
+echo -e "\n=== Available Machines ==="
+qemu-system-x86_64 -machine help | head -20
+
+echo -e "\n=== Available CPUs ==="
+qemu-system-x86_64 -cpu help | head -10
+
+echo -e "\n=== Acceleration Options ==="
+qemu-system-x86_64 -accel help

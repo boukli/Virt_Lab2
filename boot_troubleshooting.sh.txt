@@ -1,0 +1,28 @@
+#!/bin/bash
+# Boot troubleshooting
+
+echo "=== Common Boot Issues ==="
+
+# Check if image file exists and is readable
+if [ ! -f "vm.qcow2" ]; then
+    echo "ERROR: VM image file not found"
+    exit 1
+fi
+
+# Check architecture compatibility
+file vm.qcow2
+
+# Test with minimal configuration
+echo "Testing with minimal config..."
+qemu-system-x86_64 \
+    -machine pc \
+    -m 512 \
+    -drive file=vm.qcow2,format=qcow2 \
+    -nographic \
+    -serial mon:stdio
+
+# Check boot logs
+echo "Boot logs available via:"
+echo "-serial mon:stdio"
+echo "-d guest_errors"
+echo "-D debug.log"

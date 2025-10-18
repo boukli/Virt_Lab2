@@ -1,0 +1,13 @@
+#!/bin/bash
+# List and test x86 CPU models
+
+echo "=== Available x86 CPU Models ==="
+qemu-system-x86_64 -cpu help | grep x86
+
+echo -e "\n=== Testing Specific CPU ==="
+qemu-system-x86_64 -cpu Cascadelake-Server -machine pc,accel=tcg -nographic -nic none -m 512 -kernel /dev/null 2>&1 | grep "CPU model"
+
+echo -e "\n=== CPU Feature Flags ==="
+qemu-system-x86_64 -cpu qemu64,enforce -machine none -nographic -nic none <<EOF
+quit
+EOF

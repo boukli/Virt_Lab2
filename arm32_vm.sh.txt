@@ -1,0 +1,14 @@
+#!/bin/bash
+# ARM 32-bit virtual machine
+
+qemu-system-arm \
+    -machine virt \
+    -cpu cortex-a15 \
+    -smp 2 \
+    -m 2G \
+    -drive file=arm32-vm.qcow2,format=qcow2,if=virtio \
+    -netdev user,id=net0 \
+    -device virtio-net-device,netdev=net0 \
+    -device virtio-gpu-pci \
+    -nographic \
+    -serial mon:stdio

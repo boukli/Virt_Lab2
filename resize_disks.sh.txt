@@ -1,0 +1,18 @@
+#!/bin/bash
+# Disk resizing operations
+
+# Resize qcow2 disk (increase by 10GB)
+qemu-img resize vm.qcow2 +10G
+
+# Resize to specific size
+qemu-img resize vm.qcow2 30G
+
+# Resize raw disk
+qemu-img resize vm.raw 50G
+
+# Check disk information after resize
+qemu-img info vm.qcow2
+
+# Note: After resizing the image, you need to resize the filesystem inside the VM
+# For Linux: Use resize2fs (ext4) 
+# For Windows: Use Disk Management tool

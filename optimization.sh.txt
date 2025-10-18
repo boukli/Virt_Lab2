@@ -1,0 +1,28 @@
+#!/bin/bash
+# Performance optimization commands
+
+# Enable transparent huge pages
+echo always > /sys/kernel/mm/transparent_hugepage/enabled
+
+# Optimize swappiness
+echo 10 > /proc/sys/vm/swappiness
+
+# Increase dirty ratio for better I/O
+echo 20 > /proc/sys/vm/dirty_ratio
+echo 10 > /proc/sys/vm/dirty_background_ratio
+
+# Optimize network buffers
+sysctl -w net.core.rmem_max=16777216
+sysctl -w net.core.wmem_max=16777216
+sysctl -w net.ipv4.tcp_rmem="4096 87380 16777216"
+sysctl -w net.ipv4.tcp_wmem="4096 16384 16777216"
+
+# CPU governor performance
+echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+# Disk scheduler optimization (for SSDs)
+echo noop > /sys/block/sda/queue/scheduler
+echo 0 > /sys/block/sda/queue/rotational
+
+# Memory compaction
+echo 1 > /proc/sys/vm/compact_memory

@@ -1,0 +1,19 @@
+#!/bin/bash
+# ARM with UEFI boot
+
+# Check for UEFI firmware
+if [ ! -f "/usr/share/qemu-efi-aarch64/QEMU_EFI.fd" ]; then
+    echo "Installing ARM UEFI firmware..."
+    sudo apt install qemu-efi-aarch64
+fi
+
+qemu-system-aarch64 \
+    -machine virt \
+    -cpu cortex-a72 \
+    -smp 4 \
+    -m 4G \
+    -drive file=arm64-uefi.qcow2,format=qcow2,if=virtio \
+    -drive if=pflash,format=raw,file=/usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
+    -netdev user,id=net0 \
+    -device virtio-net-pci,netdev=net0 \
+    -boot menu=on

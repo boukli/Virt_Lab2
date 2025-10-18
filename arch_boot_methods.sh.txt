@@ -1,0 +1,17 @@
+#!/bin/bash
+# Architecture-specific boot methods
+
+echo "=== x86 Boot Methods ==="
+echo "BIOS: -boot order=cd"
+echo "UEFI: -bios /usr/share/ovmf/OVMF.fd"
+
+echo -e "\n=== ARM Boot Methods ==="
+echo "UEFI: -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd"
+echo "Direct Kernel: -kernel vmlinuz -initrd initrd.img"
+
+echo -e "\n=== RISC-V Boot Methods ==="
+echo "OpenSBI: -bios opensbi-riscv64-generic-fw_dynamic.bin"
+echo "Direct: -kernel Image"
+
+echo -e "\n=== MIPS Boot Methods ==="
+echo "Direct Kernel: -kernel vmlinux -append 'console=ttyS0'"

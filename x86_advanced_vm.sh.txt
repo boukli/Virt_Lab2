@@ -1,0 +1,16 @@
+#!/bin/bash
+# Advanced x86 VM with specific CPU features
+
+qemu-system-x86_64 \
+    -machine q35,accel=kvm \
+    -cpu Nehalem,+aes,+avx \
+    -smp 8,cores=4,threads=2,sockets=1 \
+    -m 8G \
+    -drive file=win11.qcow2,if=virtio,format=qcow2 \
+    -drive file=driver.iso,media=cdrom \
+    -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+    -device virtio-net-pci,netdev=net0 \
+    -vga virtio \
+    -usb -device usb-tablet \
+    -rtc base=localtime,clock=host \
+    -boot menu=on

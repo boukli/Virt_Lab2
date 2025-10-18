@@ -1,0 +1,14 @@
+#!/bin/bash
+# Setting up shared storage for live migration
+
+# Using NFS for shared storage
+sudo apt install nfs-kernel-server
+
+# Configure NFS export on storage server
+echo "/var/lib/libvirt/images 192.168.1.0/24(rw,sync,no_subtree_check)" >> /etc/exports
+sudo systemctl restart nfs-kernel-server
+
+# Mount NFS on compute nodes
+mkdir -p /var/lib/libvirt/images
+echo "192.168.1.100:/var/lib/libvirt/images /var/lib/libvirt/images nfs defaults 0 0" >> /etc/fstab
+mount -a

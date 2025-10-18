@@ -1,0 +1,17 @@
+#!/bin/bash
+# Acceleration methods for different architectures
+
+echo "=== x86 Acceleration ==="
+echo "KVM: -accel kvm"
+echo "TCG: -accel tcg"
+
+echo -e "\n=== ARM Acceleration ==="
+echo "KVM: -accel kvm (on ARM hosts)"
+echo "TCG: -accel tcg"
+
+echo -e "\n=== Cross-Architecture ==="
+echo "TCG only for cross-architecture emulation"
+
+# Test acceleration
+qemu-system-x86_64 -accel kvm -cpu host -nographic -nic none -m 512 -kernel /dev/null
+qemu-system-aarch64 -accel tcg -cpu cortex-a57 -nographic -nic none -m 512 -kernel /dev/null

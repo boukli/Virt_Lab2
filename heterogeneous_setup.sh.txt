@@ -1,0 +1,31 @@
+#!/bin/bash
+# Heterogeneous computing setup
+
+# Network multiple architecture VMs
+echo "Creating multi-architecture test network..."
+
+# ARM development server
+qemu-system-aarch64 \
+    -name "ARM-Server" \
+    -machine virt \
+    -cpu cortex-a72 \
+    -smp 4 \
+    -m 4G \
+    -drive file=arm-server.qcow2,if=virtio \
+    -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+    -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:01 \
+    -daemonize
+
+# MIPS router
+qemu-system-mips \
+    -name "MIPS-Router" \
+    -machine malta \
+    -cpu 24Kf \
+    -smp 1 \
+    -m 1G \
+    -drive file=mips-router.qcow2 \
+    -netdev tap,id=net0,ifname=tap1,script=no,downscript=no \
+    -device e1000,netdev=net0,mac=52:54:00:12:34:02 \
+    -daemonize
+
+echo "Heterogeneous network setup complete"

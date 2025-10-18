@@ -1,0 +1,26 @@
+#!/bin/bash
+# Find USB devices for passthrough
+
+# List all USB devices
+echo "=== All USB devices ==="
+lsusb
+
+# Detailed USB information
+echo -e "\n=== Detailed USB information ==="
+for device in /sys/bus/usb/devices/*/idVendor; do
+    if [ -f "$device" ]; then
+        vendor=$(cat "$device")
+        product=$(cat "${device%/*}/idProduct")
+        bus=$(cat "${device%/*}/busnum")
+        dev=$(cat "${device%/*}/devnum")
+        echo "Bus $bus Device $dev: ID $vendor:$product"
+    fi
+done
+
+# USB device tree
+echo -e "\n=== USB device tree ==="
+usb-devices
+
+# Specific device information
+echo -e "\n=== Information for specific device ==="
+lsusb -d 1234:5678 -v

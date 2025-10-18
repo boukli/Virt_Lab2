@@ -1,0 +1,18 @@
+#!/bin/bash
+# MIPS CPU models
+
+echo "=== MIPS CPU Models ==="
+qemu-system-mips64 -cpu help | grep MIPS
+qemu-system-mips -cpu help | grep MIPS
+
+echo -e "\n=== Popular MIPS CPUs ==="
+echo "24Kf: MIPS32 24K with FPU"
+echo "5KEf: MIPS64 5KE with FPU"
+echo "P5600: MIPS32 P5600"
+echo "I6400: MIPS64 I6400"
+
+# Test different CPUs
+for cpu in 24Kf 5KEf P5600; do
+    echo "Testing CPU: $cpu"
+    timeout 5s qemu-system-mips -machine malta -cpu $cpu -nographic -nic none -m 64 -kernel /dev/null
+done

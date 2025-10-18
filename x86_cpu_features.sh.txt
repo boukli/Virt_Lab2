@@ -1,0 +1,22 @@
+#!/bin/bash
+# Control CPU features
+
+# Enable specific features
+qemu-system-x86_64 \
+    -cpu qemu64,+aes,+avx2,+sha-ni \
+    -machine pc \
+    -m 2G \
+    -nographic \
+    -nic none
+
+# Disable features for compatibility
+qemu-system-x86_64 \
+    -cpu qemu64,-vmx,-svm \
+    -machine pc \
+    -m 2G
+
+# Check feature support
+qemu-system-x86_64 -cpu host -machine none -nographic -nic none <<EOF
+info registers
+quit
+EOF

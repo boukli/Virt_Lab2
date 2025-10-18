@@ -1,0 +1,15 @@
+#!/bin/bash
+# ARM direct kernel boot
+
+qemu-system-aarch64 \
+    -machine virt \
+    -cpu cortex-a57 \
+    -smp 2 \
+    -m 2G \
+    -kernel vmlinuz \
+    -initrd initrd.img \
+    -append "root=/dev/vda1 console=ttyAMA0" \
+    -drive file=rootfs.qcow2,format=qcow2,if=virtio \
+    -netdev user,id=net0 \
+    -device virtio-net-pci,netdev=net0 \
+    -nographic

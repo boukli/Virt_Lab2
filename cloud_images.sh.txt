@@ -1,0 +1,23 @@
+#!/bin/bash
+# Working with cloud images
+
+# Download Ubuntu ARM64 cloud image
+wget https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-arm64.img
+
+# Resize image
+qemu-img resize focal-server-cloudimg-arm64.img 20G
+
+# Create cloud-init data
+cat > user-data << EOF
+#cloud-config
+password: ubuntu
+chpasswd: { expire: False }
+ssh_pwauth: True
+EOF
+
+cat > meta-data << EOF
+instance-id: i-001
+local-hostname: ubuntu-arm64
+EOF
+
+cloud-localds seed.img user-data meta-data

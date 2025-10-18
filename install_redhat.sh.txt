@@ -1,0 +1,15 @@
+#!/bin/bash
+# Install QEMU on RedHat-based systems
+
+# CentOS/RHEL 8+
+sudo dnf install @virtualization
+sudo dnf install qemu-kvm qemu-img qemu-guest-agent
+sudo dnf install arm-image-installer
+
+# Fedora
+sudo dnf install qemu-system-x86 qemu-system-aarch64 qemu-system-mips \
+                 qemu-system-ppc qemu-system-riscv
+
+# Enable services
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd

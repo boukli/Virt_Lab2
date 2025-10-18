@@ -1,0 +1,23 @@
+#!/bin/bash
+# Isolated network with TAP interface
+
+# Create TAP interface
+sudo ip tuntap add tap0 mode tap
+sudo ip link set tap0 up
+sudo ip addr add 192.168.50.1/24 dev tap0
+
+# Enable IP forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# Configure NAT for TAP interface
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -A FORWARD -i tap0 -o eth0 -j ACCEPT
+sudo iptables -A FORWARD -i eth0 -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# Start VM with TAP interface
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1024 \
+  -drive file=vm.qcow2,format=qcow2 \
+  -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
+  -device virtio-net-pci,netdev=net0

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Performance tuning commands
+
+# Enable huge pages
+echo 1024 > /proc/sys/vm/nr_hugepages
+mount -t hugetlbfs hugetlbfs /dev/hugepages
+
+# CPU pinning example
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 2048 \
+  -smp 2 \
+  -cpu host \
+  -drive file=vm.qcow2,if=virtio \
+  -netdev user,id=net0 \
+  -device virtio-net-pci,netdev=net0 \
+  -numa node,nodeid=0,cpus=0-1 \
+  -daemonize
+
+# Enable KSM
+echo 1 > /sys/kernel/mm/ksm/run
+echo 1000 > /sys/kernel/mm/ksm/sleep_millisecs

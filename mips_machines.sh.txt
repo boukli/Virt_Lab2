@@ -1,0 +1,14 @@
+#!/bin/bash
+# MIPS machine types
+
+echo "=== MIPS Machine Types ==="
+qemu-system-mips64 -machine help | grep mips
+qemu-system-mips -machine help | grep mips
+
+echo -e "\n=== Common MIPS Machines ==="
+echo "malta: MIPS Malta board (most common)"
+echo "magnum: MIPS Magnum board"
+echo "mipssim: MIPS MIPSSim board"
+
+# Test Malta machine
+qemu-system-mips -machine malta -cpu 24Kf -nographic -nic none -m 128 -kernel /dev/null

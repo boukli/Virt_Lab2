@@ -1,0 +1,20 @@
+#!/bin/bash
+# Snapshot management commands
+
+# Create internal snapshot (qcow2 only)
+qemu-img snapshot -c boot-complete vm.qcow2
+
+# List snapshots
+qemu-img snapshot -l vm.qcow2
+
+# Revert to snapshot
+qemu-img snapshot -a boot-complete vm.qcow2
+
+# Delete snapshot
+qemu-img snapshot -d boot-complete vm.qcow2
+
+# Create external snapshot
+qemu-img create -f qcow2 -b vm.qcow2 snapshot1.qcow2
+
+# Commit snapshot changes back to base
+qemu-img commit snapshot1.qcow2

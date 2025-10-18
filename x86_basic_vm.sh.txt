@@ -1,0 +1,13 @@
+#!/bin/bash
+# Basic x86_64 virtual machine
+
+qemu-system-x86_64 \
+    -machine pc,accel=kvm \
+    -cpu host \
+    -smp 4 \
+    -m 4G \
+    -drive file=x86-vm.qcow2,format=qcow2 \
+    -netdev user,id=net0 \
+    -device e1000,netdev=net0 \
+    -boot order=cd \
+    -cdrom ubuntu-22.04-desktop-amd64.iso

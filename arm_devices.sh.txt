@@ -1,0 +1,22 @@
+#!/bin/bash
+# ARM-specific device configuration
+
+# With GICv3 interrupt controller
+qemu-system-aarch64 \
+    -machine virt,gic-version=3 \
+    -cpu cortex-a76 \
+    -smp 8 \
+    -m 8G \
+    -drive file=vm.qcow2,if=virtio
+
+# With specific UART
+qemu-system-arm \
+    -machine virt \
+    -serial stdio \
+    -monitor telnet:localhost:4444,server,nowait
+
+# With TrustZone enabled
+qemu-system-aarch64 \
+    -machine virt,secure=on \
+    -cpu cortex-a57 \
+    -m 4G

@@ -1,0 +1,23 @@
+#!/bin/bash
+# Architecture-specific optimizations
+
+# x86 optimizations
+qemu-system-x86_64 \
+    -accel kvm \
+    -cpu host,migratable=no \
+    -smp cores=4,threads=1 \
+    -machine pc,usb=off \
+    -drive if=virtio,cache=none,aio=native
+
+# ARM optimizations
+qemu-system-aarch64 \
+    -accel tcg,tb-size=256 \
+    -cpu cortex-a72 \
+    -machine virt,gic-version=3 \
+    -drive if=virtio,cache=writeback
+
+# MIPS optimizations
+qemu-system-mips64 \
+    -accel tcg \
+    -cpu 5KEf \
+    -machine malta

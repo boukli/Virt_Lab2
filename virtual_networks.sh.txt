@@ -1,0 +1,24 @@
+#!/bin/bash
+# Managing virtual networks with libvirt
+
+# List networks
+virsh net-list --all
+
+# Network information
+virsh net-info default
+
+# Network XML definition
+virsh net-dumpxml default
+
+# Create new network
+virsh net-define network.xml
+virsh net-start isolated
+virsh net-autostart isolated
+
+# Destroy network
+virsh net-destroy isolated
+virsh net-undefine isolated
+
+# Network configuration commands
+brctl show
+ip link show type bridge

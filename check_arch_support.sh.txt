@@ -1,0 +1,14 @@
+#!/bin/bash
+# Check available QEMU system emulators
+
+echo "=== Available QEMU System Emulators ==="
+ls /usr/bin/qemu-system-*
+
+echo -e "\n=== Checking specific architectures ==="
+for arch in x86_64 aarch64 arm mips mips64 ppc riscv64; do
+    if command -v qemu-system-$arch &> /dev/null; then
+        echo "  qemu-system-$arch: $(which qemu-system-$arch)"
+    else
+        echo "  qemu-system-$arch: Not found"
+    fi
+done

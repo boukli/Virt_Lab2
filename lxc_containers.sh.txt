@@ -1,0 +1,29 @@
+#!/bin/bash
+# LXC container management
+
+# Install LXC
+sudo apt install lxc lxc-templates bridge-utils
+
+# Check LXC version and capabilities
+lxc-checkconfig
+
+# Create container from template
+sudo lxc-create -n my-container -t download -- -d ubuntu -r focal -a amd64
+
+# List containers
+sudo lxc-ls -f
+
+# Start container
+sudo lxc-start -n my-container
+
+# Access container console
+sudo lxc-attach -n my-container
+
+# Stop container
+sudo lxc-stop -n my-container
+
+# Destroy container
+sudo lxc-destroy -n my-container
+
+# Container information
+sudo lxc-info -n my-container

@@ -1,0 +1,15 @@
+#!/bin/bash
+# List ARM machine types
+
+echo "=== ARM Machine Types ==="
+qemu-system-aarch64 -machine help | grep arm
+qemu-system-arm -machine help | grep arm
+
+echo -e "\n=== Common ARM Machines ==="
+echo "virt: ARM Virtual Machine (recommended)"
+echo "vexpress-a9: ARM Versatile Express"
+echo "raspi2: Raspberry Pi 2"
+echo "raspi3: Raspberry Pi 3"
+
+# Test specific machine
+qemu-system-aarch64 -machine virt,dumpdtb=virt.dtb

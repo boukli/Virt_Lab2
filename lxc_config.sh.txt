@@ -1,0 +1,31 @@
+#!/bin/bash
+# LXC configuration examples
+
+# Basic container configuration
+cat << EOF > /var/lib/lxc/my-container/config
+# Container configuration
+lxc.include = /usr/share/lxc/config/ubuntu.common.conf
+lxc.arch = x86_64
+
+# Container specific configuration
+lxc.rootfs.path = dir:/var/lib/lxc/my-container/rootfs
+lxc.uts.name = my-container
+
+# Network configuration
+lxc.net.0.type = veth
+lxc.net.0.link = lxcbr0
+lxc.net.0.flags = up
+lxc.net.0.hwaddr = 00:16:3e:xx:xx:xx
+
+# Resource limits
+lxc.cgroup.memory.limit_in_bytes = 512M
+lxc.cgroup.cpu.shares = 512
+EOF
+
+# Network bridge configuration
+cat << EOF > /etc/lxc/default.conf
+lxc.net.0.type = veth
+lxc.net.0.link = lxcbr0
+lxc.net.0.flags = up
+lxc.net.0.hwaddr = 00:16:3e:xx:xx:xx
+EOF

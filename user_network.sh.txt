@@ -1,0 +1,10 @@
+#!/bin/bash
+# User mode (NAT) networking examples
+
+# Basic user networking
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1024 \
+  -drive file=vm.qcow2,format=qcow2 \
+  -netdev user,id=net0 \
+  -device e1000,netdev=net0

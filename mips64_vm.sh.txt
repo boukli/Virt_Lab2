@@ -1,0 +1,15 @@
+#!/bin/bash
+# MIPS 64-bit virtual machine
+
+qemu-system-mips64 \
+    -machine malta \
+    -cpu 5KEf \
+    -smp 2 \
+    -m 2G \
+    -drive file=mips64-vm.qcow2,format=qcow2 \
+    -netdev user,id=net0 \
+    -device e1000,netdev=net0 \
+    -kernel vmlinux-5.4.0-4-5kc-malta \
+    -initrd initrd.img-5.4.0-4-5kc-malta \
+    -append "root=/dev/sda1 console=ttyS0" \
+    -nographic

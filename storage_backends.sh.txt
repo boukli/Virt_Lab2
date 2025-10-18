@@ -1,0 +1,17 @@
+#!/bin/bash
+# Different storage backends and options
+# Local file storage
+qemu-system-x86_64 \
+  -drive file=vm.qcow2,if=virtio,cache=writeback,discard=ignore
+
+# Direct block device
+qemu-system-x86_64 \
+  -drive file=/dev/sdb,if=virtio,cache=none
+
+# NFS storage
+qemu-system-x86_64 \
+  -drive file=nfs://192.168.1.100/exports/disk.qcow2,if=virtio
+
+# LVM storage
+qemu-system-x86_64 \
+  -drive file=/dev/vg0/vm-disk,if=virtio,cache=none

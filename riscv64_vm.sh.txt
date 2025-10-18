@@ -1,0 +1,16 @@
+#!/bin/bash
+# RISC-V 64-bit virtual machine
+
+qemu-system-riscv64 \
+    -machine virt \
+    -cpu rv64 \
+    -smp 4 \
+    -m 4G \
+    -drive file=riscv64-vm.qcow2,format=qcow2,if=virtio \
+    -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+    -device virtio-net-device,netdev=net0 \
+    -device virtio-gpu-pci \
+    -device usb-kbd \
+    -device usb-mouse \
+    -bios /usr/lib/riscv64-linux-gnu/opensbi/generic/fw_jump.elf \
+    -kernel /usr/lib/u-boot/qemu-riscv64_smode/uboot.elf

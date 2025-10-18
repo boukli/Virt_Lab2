@@ -1,0 +1,16 @@
+#!/bin/bash
+# Live migration process
+# Pre-migration checks
+virsh migrate-setspeed vm-name --migrate-speed 1000
+virsh migrate-getspeed vm-name
+
+# Live migration to another host
+virsh migrate --live vm-name qemu+ssh://dest-host/system
+
+# Migration with specific parameters
+virsh migrate --live vm-name \
+  qemu+ssh://dest-host/system \
+  --unsafe \
+  --verbose \
+  --timeout 120 \
+  --migrateuri tcp://dest-host:49152

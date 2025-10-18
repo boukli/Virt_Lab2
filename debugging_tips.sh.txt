@@ -1,0 +1,25 @@
+#!/bin/bash
+# Debugging tips for different architectures
+
+echo "=== General Debugging ==="
+echo "1. Use -s option for GDB debugging"
+echo "2. Use -d cpu,exec,int for detailed logs"
+echo "3. Use -D debug.log to save debug output"
+echo "4. Monitor with -monitor stdio"
+
+echo -e "\n=== Architecture-Specific ==="
+echo "ARM: Check GIC version compatibility"
+echo "MIPS: Verify endianness matches kernel"
+echo "RISC-V: Confirm privilege level setup"
+echo "x86: Validate CPU feature flags"
+
+# Example debug command
+qemu-system-aarch64 \
+    -machine virt \
+    -cpu cortex-a57 \
+    -m 1G \
+    -kernel Image \
+    -append "console=ttyAMA0 debug" \
+    -nographic \
+    -d guest_errors,cpu_reset \
+    -D arm-debug.log

@@ -1,0 +1,20 @@
+#!/bin/bash
+# VM monitoring and management commands
+
+# Monitor VM performance
+virsh dominfo vm-name
+virsh nodeinfo
+virt-top
+
+# Check disk usage
+qemu-img info vm-disk.qcow2
+
+# Monitor network
+virsh net-list
+brctl show
+
+# Check VM configuration
+virsh dumpxml vm-name
+
+# Resource usage
+cat /proc/meminfo | grep -i hugepages

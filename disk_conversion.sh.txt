@@ -1,0 +1,20 @@
+#!/bin/bash
+# Disk conversion and maintenance
+
+# Convert qcow2 to raw
+qemu-img convert -f qcow2 -O raw source.qcow2 target.raw
+
+# Convert raw to qcow2
+qemu-img convert -f raw -O qcow2 source.raw target.qcow2
+
+# Convert to VMDK (VMware)
+qemu-img convert -f qcow2 -O vmdk source.qcow2 target.vmdk
+
+# Convert to VDI (VirtualBox)
+qemu-img convert -f qcow2 -O vdi source.qcow2 target.vdi
+
+# Check and repair disk
+qemu-img check vm.qcow2
+
+# Rebase image (change backing file)
+qemu-img rebase -b new-base.qcow2 snapshot.qcow2

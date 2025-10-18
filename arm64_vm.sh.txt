@@ -1,0 +1,15 @@
+#!/bin/bash
+# ARM 64-bit virtual machine
+
+qemu-system-aarch64 \
+    -machine virt \
+    -cpu cortex-a72 \
+    -smp 4 \
+    -m 4G \
+    -drive file=arm64-vm.qcow2,format=qcow2,if=virtio \
+    -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+    -device virtio-net-pci,netdev=net0 \
+    -device virtio-gpu-pci \
+    -device usb-kbd \
+    -device usb-mouse \
+    -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd
