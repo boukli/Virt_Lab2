@@ -9,6 +9,6 @@ Lab2 : QEMU/KVM
 
   ---->   **[Lab Slides](https://github.com/boukli/Virt_Lab2/blob/main/TP2.pdf)**
 
-  ---->   **[Slides shellscripts](https://github.com/boukli/Virt_Lab2/)**
+  ---->   **[Slides shell scripts](https://github.com/boukli/Virt_Lab2/)**
 
 
